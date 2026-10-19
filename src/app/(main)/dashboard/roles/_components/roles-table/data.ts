@@ -1,0 +1,133 @@
+export type Role = {
+  role: string;
+  group: string;
+  accessLevel: string;
+  users: number;
+  permissionSets: string[];
+  lastReview: string;
+  owner: string;
+  status: "Active" | "Needs review";
+};
+
+export const roles: Role[] = [
+  {
+    role: "Workspace Owner",
+    group: "Needs review",
+    accessLevel: "Full",
+    users: 2,
+    permissionSets: ["Org Chart", "People", "Finance", "Agents", "Settings", "Audit Logs"],
+    lastReview: "Jul 8, 2026",
+    owner: "System",
+    status: "Needs review",
+  },
+  {
+    role: "Organization Admin",
+    group: "Needs review",
+    accessLevel: "Full",
+    users: 4,
+    permissionSets: ["Org Chart", "People", "Departments", "Agents", "Connected Tools"],
+    lastReview: "Jul 10, 2026",
+    owner: "Mert Aydin",
+    status: "Needs review",
+  },
+  {
+    role: "Department Lead",
+    group: "Needs review",
+    accessLevel: "Scoped",
+    users: 11,
+    permissionSets: ["Department", "People", "Tasks", "Agent Requests"],
+    lastReview: "Jul 11, 2026",
+    owner: "Mert Aydin",
+    status: "Needs review",
+  },
+  {
+    role: "People Member",
+    group: "System roles",
+    accessLevel: "Scoped",
+    users: 86,
+    permissionSets: ["Own Profile", "Org Chart", "Tasks", "Directory"],
+    lastReview: "Jul 1, 2026",
+    owner: "System",
+    status: "Active",
+  },
+  {
+    role: "Agent Operator",
+    group: "System roles",
+    accessLevel: "Scoped",
+    users: 9,
+    permissionSets: ["Agents", "Tasks", "Usage", "Run History"],
+    lastReview: "Jul 3, 2026",
+    owner: "System",
+    status: "Active",
+  },
+  {
+    role: "Org Chart Viewer",
+    group: "System roles",
+    accessLevel: "Read only",
+    users: 18,
+    permissionSets: ["Org Chart", "Departments", "Directory"],
+    lastReview: "Jul 4, 2026",
+    owner: "System",
+    status: "Active",
+  },
+  {
+    role: "Integration Service",
+    group: "System roles",
+    accessLevel: "API access",
+    users: 5,
+    permissionSets: ["Connected Tools", "API Keys", "Webhooks", "Sync Logs"],
+    lastReview: "Jun 28, 2026",
+    owner: "System",
+    status: "Active",
+  },
+  {
+    role: "Finance Controller",
+    group: "Custom roles",
+    accessLevel: "Scoped",
+    users: 3,
+    permissionSets: ["Finance", "Scenarios", "Billing", "Usage Reports"],
+    lastReview: "Jul 6, 2026",
+    owner: "Deniz Kaya",
+    status: "Active",
+  },
+  {
+    role: "Automation Builder",
+    group: "Custom roles",
+    accessLevel: "Scoped",
+    users: 7,
+    permissionSets: ["Agents", "Workflows", "Connected Tools", "Tasks", "Run Logs"],
+    lastReview: "Jul 7, 2026",
+    owner: "Deniz Kaya",
+    status: "Active",
+  },
+  {
+    role: "Agent Developer",
+    group: "Custom roles",
+    accessLevel: "Scoped",
+    users: 6,
+    permissionSets: ["Agent Studio", "Models", "API Keys", "Evaluations", "Logs"],
+    lastReview: "Jul 9, 2026",
+    owner: "Selin Yilmaz",
+    status: "Active",
+  },
+  {
+    role: "Scenario Planner",
+    group: "Custom roles",
+    accessLevel: "Scoped",
+    users: 5,
+    permissionSets: ["Scenarios", "Org Chart", "Finance", "Departments", "Exports"],
+    lastReview: "Jul 5, 2026",
+    owner: "Selin Yilmaz",
+    status: "Active",
+  },
+  {
+    role: "Executive Viewer",
+    group: "Custom roles",
+    accessLevel: "Read only",
+    users: 4,
+    permissionSets: ["Dashboard", "Org Chart", "Finance", "Analytics"],
+    lastReview: "Jul 12, 2026",
+    owner: "Mert Aydin",
+    status: "Active",
+  },
+];

@@ -1,0 +1,296 @@
+export type NodeType = "Human" | "Agent" | "Hybrid" | "Vacant";
+export type ProjectionStage = null | "3m" | "6m" | "12m";
+
+export type OrgNode = {
+  id: string;
+  parentId: string | null;
+  name: string;
+  role: string;
+  department: string;
+  type: NodeType;
+  cost: string;
+  tokenCost: string;
+  color: "sky" | "teal" | "violet" | "orange" | "rose" | "slate";
+  childCount: number;
+  suitability: number;
+  suitabilityReason: string;
+  position: { x: number; y: number };
+  projectionStage: ProjectionStage;
+  isGhost: boolean;
+  isPlanned: boolean;
+  history: string[];
+  projectedChanges: Record<string, string>;
+};
+
+export const colorMap = {
+  sky: {
+    border: "border-sky-500/50",
+    line: "stroke-sky-500",
+    soft: "bg-sky-50 text-sky-700 dark:bg-sky-500/10 dark:text-sky-300",
+    dot: "bg-sky-500",
+  },
+  teal: {
+    border: "border-teal-500/50",
+    line: "stroke-teal-500",
+    soft: "bg-teal-50 text-teal-700 dark:bg-teal-500/10 dark:text-teal-300",
+    dot: "bg-teal-500",
+  },
+  violet: {
+    border: "border-violet-500/50",
+    line: "stroke-violet-500",
+    soft: "bg-violet-50 text-violet-700 dark:bg-violet-500/10 dark:text-violet-300",
+    dot: "bg-violet-500",
+  },
+  orange: {
+    border: "border-orange-500/60",
+    line: "stroke-orange-500",
+    soft: "bg-orange-50 text-orange-700 dark:bg-orange-500/10 dark:text-orange-300",
+    dot: "bg-orange-500",
+  },
+  rose: {
+    border: "border-rose-500/50",
+    line: "stroke-rose-500",
+    soft: "bg-rose-50 text-rose-700 dark:bg-rose-500/10 dark:text-rose-300",
+    dot: "bg-rose-500",
+  },
+  slate: {
+    border: "border-slate-400/50",
+    line: "stroke-slate-400",
+    soft: "bg-slate-50 text-slate-700 dark:bg-slate-500/10 dark:text-slate-300",
+    dot: "bg-slate-500",
+  },
+};
+
+export const projectionStageStyles = {
+  "3m": {
+    badge: "bg-teal-50 text-teal-700 border-teal-200 dark:bg-teal-500/10 dark:text-teal-300 dark:border-teal-500/20",
+    border: "border-teal-400 bg-teal-50/40 ring-2 ring-teal-500/10 dark:bg-teal-500/10",
+    edge: "stroke-teal-400",
+    label: "New in 3 mo",
+    minimap: "bg-teal-500",
+    soft: "bg-teal-50 text-teal-700 dark:bg-teal-500/10 dark:text-teal-300",
+  },
+  "6m": {
+    badge:
+      "bg-violet-50 text-violet-700 border-violet-200 dark:bg-violet-500/10 dark:text-violet-300 dark:border-violet-500/20",
+    border: "border-violet-400 bg-violet-50/40 ring-2 ring-violet-500/10 dark:bg-violet-500/10",
+    edge: "stroke-violet-400",
+    label: "New in 6 mo",
+    minimap: "bg-violet-500",
+    soft: "bg-violet-50 text-violet-700 dark:bg-violet-500/10 dark:text-violet-300",
+  },
+  "12m": {
+    badge: "bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-500/10 dark:text-rose-300 dark:border-rose-500/20",
+    border: "border-rose-400 bg-rose-50/40 ring-2 ring-rose-500/10 dark:bg-rose-500/10",
+    edge: "stroke-rose-400",
+    label: "New in 1 yr",
+    minimap: "bg-rose-500",
+    soft: "bg-rose-50 text-rose-700 dark:bg-rose-500/10 dark:text-rose-300",
+  },
+} satisfies Record<Exclude<ProjectionStage, null>, Record<string, string>>;
+
+export const initialNodes: OrgNode[] = [
+  {
+    id: "ceo",
+    parentId: null,
+    name: "Aylin Kaya",
+    role: "CEO",
+    department: "Leadership",
+    type: "Human",
+    cost: "TRY 185K",
+    tokenCost: "TRY 0",
+    color: "sky",
+    childCount: 4,
+    suitability: 31,
+    suitabilityReason: "Executive judgement and stakeholder work should remain human-owned.",
+    position: { x: 930, y: 90 },
+    projectionStage: null,
+    isGhost: false,
+    isPlanned: false,
+    history: ["Created by Founder - Jan 2025", "Board reporting added - Sep 2025"],
+    projectedChanges: {
+      "3m": "No change",
+      "6m": "Adds RevOps Agent below leadership",
+      "12m": "Hybrid executive assistant recommended",
+    },
+  },
+  {
+    id: "product",
+    parentId: "ceo",
+    name: "Mert Demir",
+    role: "VP Product",
+    department: "Product",
+    type: "Human",
+    cost: "TRY 132K",
+    tokenCost: "TRY 0",
+    color: "teal",
+    childCount: 2,
+    suitability: 58,
+    suitabilityReason: "Planning stays human-led, research and triage can be agent-assisted.",
+    position: { x: 260, y: 420 },
+    projectionStage: null,
+    isGhost: false,
+    isPlanned: false,
+    history: ["Created - Mar 2025", "Human -> Hybrid review opened - Apr 2026"],
+    projectedChanges: {
+      "3m": "Adds research support",
+      "6m": "Converts roadmap triage to hybrid",
+      "12m": "Adds two agent reports",
+    },
+  },
+  {
+    id: "ops-agent",
+    parentId: "ceo",
+    name: "Ops Agent",
+    role: "Workflow Agent",
+    department: "Operations",
+    type: "Agent",
+    cost: "TRY 18K",
+    tokenCost: "TRY 42K",
+    color: "violet",
+    childCount: 1,
+    suitability: 92,
+    suitabilityReason: "Rules-driven process routing has high repeatability and low judgement risk.",
+    position: { x: 780, y: 420 },
+    projectionStage: null,
+    isGhost: false,
+    isPlanned: false,
+    history: ["Created - Feb 2026", "Token budget added - Jun 2026"],
+    projectedChanges: {
+      "3m": "Adds vendor intake",
+      "6m": "Adds procurement support",
+      "12m": "Owns most low-risk intake",
+    },
+  },
+  {
+    id: "finance-open",
+    parentId: "ceo",
+    name: "Open Role",
+    role: "Data Analyst",
+    department: "Finance",
+    type: "Vacant",
+    cost: "TRY 72K",
+    tokenCost: "TRY 0",
+    color: "orange",
+    childCount: 0,
+    suitability: 78,
+    suitabilityReason: "Reporting workload can be shifted into a monitored analytics agent.",
+    position: { x: 1300, y: 420 },
+    projectionStage: null,
+    isGhost: false,
+    isPlanned: true,
+    history: ["Opened - May 2026", "Agent replacement analysis added - Jul 2026"],
+    projectedChanges: { "3m": "Convert to hybrid", "6m": "Agent handles reporting", "12m": "Human approval only" },
+  },
+  {
+    id: "research-agent",
+    parentId: "product",
+    name: "Research Agent",
+    role: "Market Research",
+    department: "Marketing",
+    type: "Agent",
+    cost: "TRY 12K",
+    tokenCost: "TRY 28K",
+    color: "rose",
+    childCount: 0,
+    suitability: 88,
+    suitabilityReason: "Research synthesis is measurable and easy to audit.",
+    position: { x: 80, y: 750 },
+    projectionStage: null,
+    isGhost: false,
+    isPlanned: false,
+    history: ["Created - Apr 2026", "Model changed - Jun 2026"],
+    projectedChanges: { "3m": "No change", "6m": "Higher token cap", "12m": "Adds content research child" },
+  },
+  {
+    id: "qa-hybrid",
+    parentId: "product",
+    name: "QA Hybrid",
+    role: "QA Review Owner",
+    department: "Engineering",
+    type: "Hybrid",
+    cost: "TRY 64K",
+    tokenCost: "TRY 16K",
+    color: "sky",
+    childCount: 0,
+    suitability: 74,
+    suitabilityReason: "Regression triage can be automated while final release risk stays human-reviewed.",
+    position: { x: 500, y: 750 },
+    projectionStage: null,
+    isGhost: false,
+    isPlanned: false,
+    history: ["Created - Jan 2026", "Human -> Hybrid - Apr 2026"],
+    projectedChanges: {
+      "3m": "No change",
+      "6m": "Adds automated release notes",
+      "12m": "Converts to agent-led QA triage",
+    },
+  },
+  {
+    id: "vendor-intake",
+    parentId: "ops-agent",
+    name: "Vendor Intake",
+    role: "Projected Agent",
+    department: "Operations",
+    type: "Agent",
+    cost: "TRY 10K",
+    tokenCost: "TRY 22K",
+    color: "teal",
+    childCount: 0,
+    suitability: 86,
+    suitabilityReason: "Projected workflow is repeatable and budget-safe.",
+    position: { x: 940, y: 800 },
+    projectionStage: "3m",
+    isGhost: true,
+    isPlanned: false,
+    history: ["Projected by growth model - Jul 2026"],
+    projectedChanges: { "3m": "Add now", "6m": "Expand to procurement", "12m": "Own vendor desk intake" },
+  },
+  {
+    id: "revops-agent",
+    parentId: "ceo",
+    name: "RevOps Agent",
+    role: "Projected Revenue Ops",
+    department: "Revenue",
+    type: "Agent",
+    cost: "TRY 16K",
+    tokenCost: "TRY 34K",
+    color: "violet",
+    childCount: 0,
+    suitability: 81,
+    suitabilityReason: "Projected agent reduces recurring planning load.",
+    position: { x: 1780, y: 420 },
+    projectionStage: "6m",
+    isGhost: true,
+    isPlanned: false,
+    history: ["Projected by 6 month scenario - Jul 2026"],
+    projectedChanges: { "3m": "Hidden", "6m": "Add RevOps agent", "12m": "Add two revenue workflows" },
+  },
+  {
+    id: "exec-assistant",
+    parentId: "ceo",
+    name: "Executive Hybrid",
+    role: "Projected Assistant",
+    department: "Leadership",
+    type: "Hybrid",
+    cost: "TRY 38K",
+    tokenCost: "TRY 12K",
+    color: "rose",
+    childCount: 0,
+    suitability: 64,
+    suitabilityReason: "Projected hybrid support handles scheduling and briefing, not executive decisions.",
+    position: { x: 1780, y: 800 },
+    projectionStage: "12m",
+    isGhost: true,
+    isPlanned: false,
+    history: ["Projected by 12 month automation target - Jul 2026"],
+    projectedChanges: { "3m": "Hidden", "6m": "Hidden", "12m": "Add hybrid support" },
+  },
+];
+
+export const projectionSummary = {
+  now: "Current workspace: 6 active roles, 2 agents, TRY 483K/mo tracked cost.",
+  "3m": "3 month projection: +1 role (0 human, 1 agent), +TRY 32K/mo, estimated 48% automation.",
+  "6m": "6 month projection: +2 roles (0 human, 2 agents), +TRY 82K/mo, estimated 62% automation.",
+  "12m": "1 year projection: +3 roles (1 hybrid, 2 agents), +TRY 132K/mo, estimated 70% automation.",
+};
